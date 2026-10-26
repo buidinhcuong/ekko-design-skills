@@ -1,0 +1,21 @@
+{
+  "name": "ekko-design-skills",
+  "description": "Ekko design skills for Claude: the design system, brand and slides, and more to come.",
+  "owner": {
+    "name": "Ekko Design Team"
+  },
+  "metadata": {
+    "description": "Ekko design skills for Claude: the design system, brand and slides, and more to come.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "ekko-design",
+      "source": "./plugins/ekko-design",
+      "description": "Ekko Design System (tokens, components, icons, logos, K-Wave, slide master) for designing Ekko apps, websites, slides and pitch decks.",
+      "version": "1.0.0",
+      "category": "design",
+      "tags": ["design-system", "ekko", "figma", "tokens", "slides", "brand"]
+    }
+  ]
+}

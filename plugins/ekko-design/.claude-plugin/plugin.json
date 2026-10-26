@@ -1,0 +1,9 @@
+{
+  "name": "ekko-design",
+  "version": "1.0.0",
+  "description": "Ekko Design System (tokens, components, icons, logos, K-Wave, slide master) for designing Ekko apps, websites, slides and pitch decks.",
+  "author": {
+    "name": "Ekko Design Team"
+  },
+  "keywords": ["design-system", "ekko", "figma", "tokens", "slides", "brand"]
+}

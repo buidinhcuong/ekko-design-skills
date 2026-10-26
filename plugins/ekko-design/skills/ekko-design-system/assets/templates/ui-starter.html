@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ekko UI Starter</title>
+<!-- Copy ekko-tokens.css next to this file (or fix the path). -->
+<link rel="stylesheet" href="../tokens/ekko-tokens.css">
+<style>
+/* ==========================================================================
+   Ekko component CSS — token-only implementation of the Figma components.
+   Copy the parts you need. Every value is a var() from ekko-tokens.css.
+   ========================================================================== */
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg-secondary); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p { margin: 0; }
+.icon { width: 20px; height: 20px; flex: none; }
+.icon-24 { width: 24px; height: 24px; }
+
+/* Button ------------------------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-8);
+  height: 40px; padding: var(--spacing-8) var(--spacing-16); border-radius: var(--radius-14);
+  font: var(--font-weight-regular) var(--font-size-text-sm)/var(--line-height-text-sm) var(--font-primary);
+  border: 1px solid transparent; cursor: pointer; white-space: nowrap;
+  transition: background-color .15s, border-color .15s, box-shadow .15s;
+}
+.btn:focus-visible { outline: none; box-shadow: var(--focus-ring-brand); }
+.btn:disabled { cursor: not-allowed; }
+.btn-sm { height: 32px; padding: var(--spacing-4) var(--spacing-12); border-radius: var(--radius-12); }
+.btn-lg { height: 48px; padding: var(--spacing-12) var(--spacing-20); border-radius: var(--radius-18); font-size: var(--font-size-text-md); line-height: var(--line-height-text-md); }
+.btn-xl { height: 56px; padding: var(--spacing-14) var(--spacing-20); border-radius: var(--radius-18); font-size: var(--font-size-text-lg); line-height: var(--line-height-text-lg); }
+.btn-icon { width: 40px; padding: 0; } .btn-sm.btn-icon { width: 32px; } .btn-lg.btn-icon { width: 48px; }
+.btn-brand { background: var(--bg-brand-500); color: var(--text-white); }
+.btn-brand:hover { background: var(--bg-brand-600); }
+.btn-brand:disabled { background: var(--bg-brand-200); color: var(--text-white-disable); }
+.btn-secondary { background: var(--bg-primary); color: var(--text-primary); border-color: var(--border-primary); }
+.btn-secondary:hover { background: var(--bg-secondary); }
+.btn-secondary:disabled { color: var(--text-tertiary); background: var(--bg-primary); }
+.btn-clear { background: transparent; color: var(--text-primary); }
+.btn-clear:hover { background: var(--bg-tertiary); }
+.btn-clear:focus-visible { box-shadow: var(--focus-ring-secondary); }
+.btn-clear:disabled { color: var(--text-tertiary); background: transparent; }
+.btn-success { background: var(--bg-success-500); color: var(--text-white); }
+.btn-success:hover { background: var(--bg-success-600); }
+.btn-alert { background: var(--bg-error-500); color: var(--text-white); }
+.btn-alert:hover { background: var(--bg-error-600); }
+.link { color: var(--text-brand-500); text-decoration: none; font-size: var(--font-size-text-sm); }
+.link:hover { color: var(--text-brand-600); text-decoration: underline; }
+
+/* Input -------------------------------------------------------------- */
+.field { display: flex; flex-direction: column; gap: var(--spacing-8); }
+.label { font-size: var(--font-size-text-sm); line-height: var(--line-height-text-sm); font-weight: var(--font-weight-medium); color: var(--text-primary); }
+.label .req { color: var(--text-error); }
+.input {
+  display: flex; align-items: center; gap: var(--spacing-8); height: 44px; padding: 0 var(--spacing-16);
+  background: var(--bg-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-16);
+  color: var(--icon-secondary); transition: border-color .15s, box-shadow .15s;
+}
+.input:hover { border-color: var(--border-tertiary); }
+.input:focus-within { box-shadow: var(--focus-ring-brand); }
+.input input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text-primary);
+  font: var(--font-weight-regular) var(--font-size-text-md)/var(--line-height-text-md) var(--font-primary); }
+.input input::placeholder { color: var(--text-tertiary); }
+.input .addon { color: var(--text-secondary); font-size: var(--font-size-text-sm); padding-right: var(--spacing-12); border-right: 1px solid var(--border-primary); align-self: stretch; display: flex; align-items: center; }
+.input.is-error { border-color: var(--text-error); }
+.input.is-error:focus-within { box-shadow: var(--focus-ring-error); }
+.helper { display: flex; align-items: center; gap: var(--spacing-6); font-size: var(--font-size-text-sm); line-height: var(--line-height-text-sm); color: var(--text-secondary); }
+.helper.is-error { color: var(--text-error); }
+
+/* Checkbox & toggle -------------------------------------------------- */
+.check { display: inline-flex; align-items: center; gap: var(--spacing-8); font-size: var(--font-size-text-sm); color: var(--text-primary); cursor: pointer; }
+.check input:not(.toggle) { appearance: none; width: 16px; height: 16px; margin: 0; border: 1px solid var(--border-primary); border-radius: var(--radius-6); background: var(--bg-primary); display: grid; place-items: center; }
+.check input:not(.toggle):checked { background: var(--bg-brand-500); border-color: var(--bg-brand-500); }
+.check input:not(.toggle):checked::after { content: ""; width: 8px; height: 4px; border: 2px solid var(--text-white); border-top: 0; border-right: 0; transform: rotate(-45deg) translate(1px, -1px); }
+.check input:focus-visible { outline: none; box-shadow: var(--focus-ring-brand); }
+.toggle { appearance: none; width: 52px; height: 24px; margin: 0; padding: var(--spacing-2); border-radius: var(--radius-32); background: var(--grey-300); cursor: pointer; transition: background .15s; }
+.toggle::after { content: ""; display: block; width: 20px; height: 20px; border-radius: var(--radius-full); background: var(--base-white); box-shadow: var(--shadow-sm); transition: transform .15s; }
+.toggle:checked { background: var(--payday-blue-500); }
+.toggle:checked::after { transform: translateX(28px); }
+.toggle:focus-visible { outline: none; box-shadow: var(--focus-ring-brand); }
+
+/* Badge -------------------------------------------------------------- */
+.badge { display: inline-flex; align-items: center; gap: var(--spacing-6); height: 28px; padding: var(--spacing-4) var(--spacing-6); border-radius: var(--radius-12); font-size: var(--font-size-text-sm); line-height: var(--line-height-text-sm); }
+.badge-sm { height: 22px; padding: var(--spacing-2) var(--spacing-6); border-radius: var(--radius-10); font-size: var(--font-size-text-xs); line-height: var(--line-height-text-xs); }
+.badge .dot { width: 6px; height: 6px; border-radius: var(--radius-full); background: currentColor; }
+.badge-brand { background: var(--bg-brand-50); color: var(--text-brand-500); }
+.badge-green { background: var(--bg-success-50); color: var(--text-success); }
+.badge-yellow { background: var(--bg-warning-50); color: var(--text-warning); }
+.badge-red { background: var(--bg-error-50); color: var(--text-error); }
+.badge-grey { background: var(--bg-grey-50); color: var(--text-primary); }
+
+/* Alert & toast ------------------------------------------------------ */
+.alert { display: flex; gap: var(--spacing-12); padding: var(--spacing-12); border-radius: var(--radius-24); border: 1px solid; }
+.alert-brand { background: var(--bg-brand-50); border-color: var(--border-brand); color: var(--icon-highlight); }
+.alert-title { font-size: var(--font-size-text-md); line-height: var(--line-height-text-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); }
+.alert-desc { font-size: var(--font-size-text-sm); line-height: var(--line-height-text-sm); color: var(--text-secondary); margin-top: var(--spacing-2); }
+.toast { position: fixed; right: var(--spacing-24); bottom: var(--spacing-24); width: 380px; display: flex; gap: var(--spacing-16); padding: var(--spacing-12); background: var(--bg-primary); border: 1px solid var(--border-secondary); border-radius: var(--radius-24); box-shadow: var(--shadow-lg); }
+.toast .ok { width: 40px; height: 40px; border-radius: var(--radius-full); display: grid; place-items: center; background: var(--bg-success-50); color: var(--text-success); flex: none; }
+
+/* Layout: top bar, sidebar, cards, tabs, table ----------------------- */
+.app { display: grid; grid-template-columns: 300px 1fr; grid-template-rows: 64px 1fr; min-height: 100vh; }
+.topbar { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; padding: var(--spacing-16) var(--spacing-32); background: var(--bg-primary); border-bottom: 1px solid var(--border-secondary); }
+.topbar img { height: 28px; }
+.logo-dark { display: none; }
+:root[data-theme="dark"] .logo-light { display: none; } :root[data-theme="dark"] .logo-dark { display: block; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .logo-light { display: none; } :root:not([data-theme="light"]) .logo-dark { display: block; } }
+.topbar .right { display: flex; align-items: center; gap: var(--spacing-12); }
+.avatar { width: 40px; height: 40px; border-radius: var(--radius-full); background: var(--grey-100); color: var(--grey-500); display: grid; place-items: center; font-weight: var(--font-weight-medium); }
+.sidebar { background: var(--bg-primary); border-right: 1px solid var(--border-secondary); padding: var(--spacing-16); display: flex; flex-direction: column; gap: var(--spacing-4); }
+.nav-label { padding: var(--spacing-16) var(--spacing-16) var(--spacing-8); font-size: var(--font-size-text-xs); line-height: var(--line-height-text-xs); color: var(--text-tertiary); font-weight: var(--font-weight-medium); }
+.nav { display: flex; align-items: center; gap: var(--spacing-8); height: 40px; padding: var(--spacing-8) var(--spacing-16); border-radius: var(--radius-12); color: var(--text-primary); text-decoration: none; font-size: var(--font-size-text-sm); }
+.nav .icon { color: var(--icon-secondary); }
+.nav:hover { background: var(--bg-grey-50); }
+.nav.active { background: var(--bg-grey-200); font-weight: var(--font-weight-semibold); }
+.nav.active .icon { color: var(--icon-highlight); }
+.counter { margin-left: auto; min-width: 24px; height: 24px; padding: var(--spacing-2); border-radius: var(--radius-8); background: var(--bg-tertiary); color: var(--text-secondary); font-size: var(--font-size-text-sm); text-align: center; font-weight: var(--font-weight-regular); }
+.content { padding: var(--spacing-32); display: flex; flex-direction: column; gap: var(--spacing-24); max-width: 1280px; }
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--spacing-16); }
+.page-title { font-size: var(--font-size-display-sm); line-height: var(--line-height-display-sm); font-weight: var(--font-weight-semibold); color: var(--text-primary); }
+.page-title em { font-family: var(--font-secondary); font-weight: var(--font-weight-regular); color: var(--text-highlight); }
+.sub { font-size: var(--font-size-text-md); line-height: var(--line-height-text-md); color: var(--text-secondary); margin-top: var(--spacing-4); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-24); }
+.grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--spacing-24); align-items: start; }
+.grid-2 > *, .grid-3 > * { min-width: 0; }
+.table-wrap { overflow-x: auto; }
+.card { background: var(--bg-primary); border: 1px solid var(--border-secondary); border-radius: var(--radius-24); padding: var(--spacing-24); display: flex; flex-direction: column; gap: var(--spacing-16); }
+.card-title { font-size: var(--font-size-text-lg); line-height: var(--line-height-text-lg); font-weight: var(--font-weight-semibold); color: var(--text-primary); }
+.kpi-label { font-size: var(--font-size-text-sm); line-height: var(--line-height-text-sm); font-weight: var(--font-weight-medium); color: var(--text-secondary); display: flex; align-items: center; gap: var(--spacing-8); }
+.kpi-value { font-size: var(--font-size-display-md); line-height: var(--line-height-display-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.kpi-icon { width: 40px; height: 40px; border-radius: var(--radius-12); display: grid; place-items: center; background: var(--bg-brand-50); color: var(--icon-highlight); }
+.tabs { display: inline-flex; padding: var(--spacing-2); background: var(--bg-secondary); border-radius: var(--radius-16); }
+.tab { height: 40px; padding: var(--spacing-8) var(--spacing-16); border: 0; border-radius: var(--radius-12); background: transparent; color: var(--text-secondary); font: inherit; font-size: var(--font-size-text-sm); cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--bg-primary); color: var(--text-primary); border-radius: var(--radius-14); box-shadow: var(--shadow-xs); }
+.tab:focus-visible { outline: none; box-shadow: var(--focus-ring-brand); }
+.table { width: 100%; border-collapse: collapse; font-size: var(--font-size-text-sm); line-height: var(--line-height-text-sm); }
+.table th { text-align: left; height: 44px; padding: var(--spacing-12) var(--spacing-16); font-size: var(--font-size-text-xs); line-height: var(--line-height-text-xs); font-weight: var(--font-weight-medium); color: var(--text-secondary); background: var(--bg-secondary); }
+.table th:first-child { border-radius: var(--radius-12) 0 0 var(--radius-12); } .table th:last-child { border-radius: 0 var(--radius-12) var(--radius-12) 0; }
+.table td { height: 48px; padding: var(--spacing-12) var(--spacing-16); color: var(--text-primary); border-bottom: 1px solid var(--border-secondary); }
+.table td.num { font-variant-numeric: tabular-nums; text-align: right; } .table th.num { text-align: right; }
+.person { display: flex; align-items: center; gap: var(--spacing-12); }
+.person .avatar { width: 32px; height: 32px; font-size: var(--font-size-text-sm); }
+.muted { color: var(--text-secondary); }
+.stack { display: flex; flex-direction: column; gap: var(--spacing-16); }
+.row { display: flex; align-items: center; gap: var(--spacing-12); flex-wrap: wrap; }
+
+@media (max-width: 1023px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  .content { padding: var(--spacing-20); }
+  .topbar { padding: var(--spacing-12) var(--spacing-20); }
+  .toast { left: var(--spacing-20); right: var(--spacing-20); width: auto; }
+  .page-head { flex-direction: column; align-items: stretch; }
+  .page-head .row > .btn { flex: 1; }
+  .table td, .table th { white-space: nowrap; }
+}
+</style>
+</head>
+<body>
+<!-- Icons: Stroke style from the Figma library (Hugeicons). More in ../icons/ -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="i-home-01" viewBox="0 0 24 24" fill="none"><path d="M15 17C14.2005 17.6224 13.1502 18 12 18C10.8498 18 9.79952 17.6224 9 17" stroke-width="1.5" stroke-linecap="round" stroke="currentColor"/> <path d="M7.02099 4.6L5.58114 5.64106C3.65403 7.03443 2.69047 7.73112 2.25617 8.74938C1.82186 9.76763 1.99837 10.9162 2.35139 13.2135L2.65243 15.1724C3.15287 18.4289 3.40309 20.0572 4.571 21.0286C5.73891 22 7.44633 22 10.8612 22H13.1388C16.5537 22 18.2611 22 19.429 21.0286C20.5969 20.0572 20.8471 18.4289 21.3476 15.1724L21.6486 13.2135C22.0016 10.9162 22.1781 9.76763 21.7438 8.74938C21.3095 7.73112 20.346 7.03443 18.4189 5.64106L16.979 4.6C14.5817 2.86667 13.3831 2 12 2C10.6169 2 9.41829 2.86667 7.02099 4.6Z" stroke-width="1.5" stroke-linejoin="round" stroke="currentColor"/></symbol>
+<symbol id="i-wallet-01" viewBox="0 0 24 24" fill="none"><path d="M16 14C16 14.8284 16.6716 15.5 17.5 15.5C18.3284 15.5 19 14.8284 19 14C19 13.1716 18.3284 12.5 17.5 12.5C16.6716 12.5 16 13.1716 16 14Z" stroke-width="1.5" stroke="currentColor"/> <path d="M10 7H16C18.8284 7 20.2426 7 21.1213 7.87868C22 8.75736 22 10.1716 22 13V15C22 17.8284 22 19.2426 21.1213 20.1213C20.2426 21 18.8284 21 16 21H10C6.22876 21 4.34315 21 3.17157 19.8284C2 18.6569 2 16.7712 2 13V11C2 7.22876 2 5.34315 3.17157 4.17157C4.34315 3 6.22876 3 10 3H14C14.93 3 15.395 3 15.7765 3.10222C16.8117 3.37962 17.6204 4.18827 17.8978 5.22354C18 5.60504 18 6.07003 18 7" stroke-width="1.5" stroke-linecap="round" stroke="currentColor"/></symbol>
+<symbol id="i-user-group" viewBox="0 0 24 24" fill="none"><path d="M20.774 18C21.5233 18 22.1193 17.5285 22.6545 16.8691C23.7499 15.5194 21.9513 14.4408 21.2654 13.9126C20.568 13.3756 19.7894 13.0714 19 13M18 11C19.3807 11 20.5 9.88071 20.5 8.5C20.5 7.11929 19.3807 6 18 6" stroke-width="1.5" stroke-linecap="round" stroke="currentColor"/> <path d="M3.22596 18C2.47666 18 1.88067 17.5285 1.34555 16.8691C0.250089 15.5194 2.04867 14.4408 2.73465 13.9126C3.43197 13.3756 4.21058 13.0714 5 13M5.5 11C4.11929 11 3 9.88071 3 8.5C3 7.11929 4.11929 6 5.5 6" stroke-width="1.5" stroke-linecap="round" stroke="currentColor"/> <path d="M8.0838 15.1112C10.4799 13.6296 13.5201 13.6296 15.9162 15.1112C16.938 15.743 19.617 17.0331 17.9853 18.6474C17.1882 19.436 16.3005 20 15.1844 20H8.81563C7.69952 20 6.81178 19.436 6.0147 18.6474C4.38299 17.0331 7.06203 15.743 8.0838 15.1112Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/> <path d="M15.5 7.5C15.5 9.433 13.933 11 12 11C10.067 11 8.5 9.433 8.5 7.5C8.5 5.567 10.067 4 12 4C13.933 4 15.5 5.567 15.5 7.5Z" stroke-width="1.5" stroke="currentColor"/></symbol>
+<symbol id="i-settings-01" viewBox="0 0 24 24" fill="none"><path d="M20.8239 6.28479L21.3175 7.14139C21.6674 7.74864 21.8423 8.05227 21.8084 8.37549C21.7744 8.69871 21.5402 8.95918 21.0718 9.48012L20.0407 10.6328C19.7888 10.9518 19.6098 11.5078 19.6098 12.0077C19.6098 12.5078 19.7887 13.0636 20.0407 13.3827L21.0718 14.5354C21.5402 15.0564 21.7744 15.3168 21.8084 15.6401C21.8423 15.9633 21.6674 16.2669 21.3175 16.8741L20.8239 17.7307C20.4506 18.3785 20.264 18.7025 19.9464 18.8316C19.6288 18.9608 19.2696 18.8589 18.5513 18.655L17.3311 18.3113C16.8724 18.2055 16.3912 18.2656 15.9724 18.4808L15.6356 18.6752C15.2765 18.9052 15.0004 19.2442 14.8476 19.6428L14.5136 20.6403C14.294 21.3003 14.1842 21.6303 13.9228 21.8191C13.6615 22.0078 13.3143 22.0078 12.6199 22.0078H11.5051C10.8108 22.0078 10.4636 22.0078 10.2022 21.8191C9.94085 21.6303 9.83106 21.3003 9.61149 20.6403L9.2775 19.6428C9.12464 19.2442 8.84851 18.9052 8.4895 18.6752L8.15267 18.4808C7.73387 18.2656 7.25263 18.2055 6.79394 18.3113L5.57377 18.655C4.85542 18.8589 4.49625 18.9608 4.17867 18.8316C3.86109 18.7025 3.67443 18.3785 3.30114 17.7307L2.80757 16.8741C2.45766 16.2669 2.2827 15.9633 2.31666 15.6401C2.35062 15.3168 2.58483 15.0564 3.05326 14.5354L4.08433 13.3827C4.33636 13.0636 4.51521 12.5078 4.51521 12.0077C4.51521 11.5078 4.3363 10.9518 4.0843 10.6328L3.05326 9.48012C2.58483 8.95918 2.35061 8.69871 2.31666 8.37549C2.2827 8.05227 2.45766 7.74864 2.80757 7.14139L3.30115 6.28479C3.67445 5.63696 3.86109 5.31305 4.17867 5.18388C4.49625 5.05472 4.85541 5.15664 5.57375 5.36048L6.79398 5.70418C7.25259 5.80994 7.73374 5.74994 8.15249 5.53479L8.48937 5.34042C8.84845 5.11043 9.12465 4.77133 9.27753 4.37274L9.61149 3.37536C9.83106 2.71534 9.94085 2.38533 10.2022 2.19657C10.4636 2.00781 10.8108 2.00781 11.5051 2.00781H12.6199C13.3143 2.00781 13.6615 2.00781 13.9228 2.19657C14.1842 2.38533 14.294 2.71534 14.5136 3.37536L14.8475 4.37274C15.0004 4.77133 15.2766 5.11043 15.6357 5.34042L15.9726 5.53479C16.3913 5.74994 16.8725 5.80994 17.3311 5.70418L18.5513 5.36048C19.2696 5.15664 19.6288 5.05472 19.9464 5.18388C20.264 5.31305 20.4506 5.63696 20.8239 6.28479Z" stroke-width="1.5" stroke-linecap="round" stroke="currentColor"/> <path d="M15.5195 12C15.5195 13.933 13.9525 15.5 12.0195 15.5C10.0865 15.5 8.51953 13.933 8.51953 12C8.51953 10.067 10.0865 8.5 12.0195 8.5C13.9525 8.5 15.5195 10.067 15.5195 12Z" stroke-width="1.5" stroke="currentColor"/></symbol>
+<symbol id="i-notification-01" viewBox="0 0 24 24" fill="none"><path d="M5.15837 11.491C5.34988 7.85222 8.35617 5 12 5C15.6438 5 18.6501 7.85223 18.8416 11.491C18.9151 12.887 18.8306 14.373 20.0779 15.3084C20.6584 15.7438 21 16.427 21 17.1527C21 18.1508 20.2182 19 19.2 19H4.8C3.7818 19 3 18.1508 3 17.1527C3 16.427 3.34164 15.7438 3.92213 15.3084C5.16936 14.373 5.08489 12.887 5.15837 11.491Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/> <path d="M10.5 3.125C10.5 3.95343 11.1716 5 12 5C12.8284 5 13.5 3.95343 13.5 3.125C13.5 2.29657 12.8284 2 12 2C11.1716 2 10.5 2.29657 10.5 3.125Z" stroke-width="1.5" stroke="currentColor"/> <path d="M15 19C15 20.6569 13.6569 22 12 22C10.3431 22 9 20.6569 9 19" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></symbol>
+<symbol id="i-search-01" viewBox="0 0 24 24" fill="none"><path d="M17.5 17.5L22 22" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/> <path d="M20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C15.9706 20 20 15.9706 20 11Z" stroke-width="1.5" stroke-linejoin="round" stroke="currentColor"/></symbol>
+<symbol id="i-plus-sign" viewBox="0 0 24 24" fill="none"><path d="M12 4V12M12 12V20M12 12H20M12 12H4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></symbol>
+<symbol id="i-chevron-down-01" viewBox="0 0 24 24" fill="none"><path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></symbol>
+<symbol id="i-money-send-01" viewBox="0 0 24 24" fill="none"><path d="M18 6C19.3001 6.1287 20.1752 6.41956 20.8284 7.07691C22 8.25596 22 10.1536 22 13.9489C22 17.7442 22 19.6419 20.8284 20.8209C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8209C2 19.6419 2 17.7442 2 13.9489C2 10.1536 2 8.25596 3.17157 7.07691C3.82475 6.41956 4.69989 6.1287 6 6" stroke-width="1.5" stroke-linecap="round" stroke="currentColor"/> <path d="M18.5078 14H18.4988" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/> <path d="M5.50781 14H5.49883" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/> <path d="M14.5 14C14.5 15.3807 13.3807 16.5 12 16.5C10.6193 16.5 9.5 15.3807 9.5 14C9.5 12.6193 10.6193 11.5 12 11.5C13.3807 11.5 14.5 12.6193 14.5 14Z" stroke-width="1.5" stroke="currentColor"/> <path d="M12 2V8M12 2C12.7002 2 14.0085 3.9943 14.5 4.5M12 2C11.2998 2 9.99153 3.9943 9.5 4.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></symbol>
+<symbol id="i-chart-line-data-01" viewBox="0 0 24 24" fill="none"><path d="M21 21H10C6.70017 21 5.05025 21 4.02513 19.9749C3 18.9497 3 17.2998 3 14V3" stroke-width="1.5" stroke-linecap="round" stroke="currentColor"/> <path d="M5 20C5.43938 16.8438 7.67642 8.7643 10.4282 8.7643C12.3301 8.7643 12.8226 12.6353 14.6864 12.6353C17.8931 12.6353 17.4282 4 21 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></symbol>
+<symbol id="i-information-circle" viewBox="0 0 24 24" fill="none"><path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke-width="1.5" stroke="currentColor"/> <path d="M12.2422 17V12C12.2422 11.5286 12.2422 11.2929 12.0957 11.1464C11.9493 11 11.7136 11 11.2422 11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/> <path d="M11.992 8H12.001" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></symbol>
+<symbol id="i-tick-02" viewBox="0 0 24 24" fill="none"><path d="M19 6.5L8.5 17.5L5 14" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></symbol>
+<symbol id="i-cancel-01" viewBox="0 0 24 24" fill="none"><path d="M19 5L12 12M12 12L5 19M12 12L5 5M12 12L19 19" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></symbol>
+<symbol id="i-arrow-right-02" viewBox="0 0 24 24" fill="none"><path d="M20 11.9998H4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/> <path d="M15 17C15 17 20 13.3176 20 12C20 10.6824 15 7 15 7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></symbol>
+</svg>
+
+<div class="app">
+  <header class="topbar">
+    <img class="logo-light" src="../logos/ekko-primary-payday-blue.svg" alt="ekko"><img class="logo-dark" src="../logos/ekko-primary-lime.svg" alt="ekko">
+    <div class="right">
+      <button class="btn btn-clear btn-icon" aria-label="Đổi giao diện sáng/tối" id="theme"><svg class="icon"><use href="#i-settings-01"/></svg></button>
+      <button class="btn btn-secondary btn-icon" aria-label="Thông báo"><svg class="icon"><use href="#i-notification-01"/></svg></button>
+      <div class="avatar" aria-label="Nguyễn An">NA</div>
+    </div>
+  </header>
+
+  <nav class="sidebar" aria-label="Điều hướng">
+    <a class="nav active" href="#"><svg class="icon"><use href="#i-home-01"/></svg>Tổng quan</a>
+    <a class="nav" href="#"><svg class="icon"><use href="#i-user-group"/></svg>Nhân viên<span class="counter">7</span></a>
+    <a class="nav" href="#"><svg class="icon"><use href="#i-money-send-01"/></svg>Yêu cầu ứng lương</a>
+    <a class="nav" href="#"><svg class="icon"><use href="#i-chart-line-data-01"/></svg>Báo cáo</a>
+    <div class="nav-label">Cài đặt</div>
+    <a class="nav" href="#"><svg class="icon"><use href="#i-wallet-01"/></svg>Thanh toán</a>
+    <a class="nav" href="#"><svg class="icon"><use href="#i-settings-01"/></svg>Cấu hình</a>
+  </nav>
+
+  <main class="content">
+    <div class="page-head">
+      <div>
+        <h1 class="page-title">Chào buổi sáng, <em>An</em></h1>
+        <p class="sub">Tình hình ứng lương của doanh nghiệp tháng 10/2026.</p>
+      </div>
+      <div class="row">
+        <button class="btn btn-secondary">Xuất báo cáo</button>
+        <button class="btn btn-brand"><svg class="icon"><use href="#i-plus-sign"/></svg>Thêm nhân viên</button>
+      </div>
+    </div>
+
+    <div class="alert alert-brand" role="status">
+      <svg class="icon icon-24"><use href="#i-information-circle"/></svg>
+      <div><p class="alert-title">Kỳ đối soát sắp tới: 31/10</p><p class="alert-desc">Vui lòng xác nhận bảng công trước 17:00 ngày 30/10 để nhân viên tiếp tục ứng lương.</p></div>
+    </div>
+
+    <section class="grid-3" aria-label="Chỉ số">
+      <div class="card"><div class="kpi-label"><span class="kpi-icon"><svg class="icon"><use href="#i-money-send-01"/></svg></span>Đã ứng trong tháng</div><div class="kpi-value">1.284.500.000đ</div><span class="badge badge-sm badge-green"><span class="dot"></span>+12,4% so với tháng trước</span></div>
+      <div class="card"><div class="kpi-label"><span class="kpi-icon"><svg class="icon"><use href="#i-user-group"/></svg></span>Nhân viên sử dụng</div><div class="kpi-value">2.418</div><span class="badge badge-sm badge-brand">78% tổng nhân sự</span></div>
+      <div class="card"><div class="kpi-label"><span class="kpi-icon"><svg class="icon"><use href="#i-wallet-01"/></svg></span>Hạn mức còn lại</div><div class="kpi-value">615.500.000đ</div><span class="badge badge-sm badge-yellow"><span class="dot"></span>Còn 32% hạn mức</span></div>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <div class="row" style="justify-content:space-between">
+          <h2 class="card-title">Yêu cầu gần đây</h2>
+          <div class="tabs" role="tablist"><button class="tab" role="tab" aria-selected="true">Tất cả</button><button class="tab" role="tab" aria-selected="false">Chờ duyệt</button><button class="tab" role="tab" aria-selected="false">Đã chi</button></div>
+        </div>
+        <div class="table-wrap"><table class="table">
+          <thead><tr><th>Nhân viên</th><th>Thời gian</th><th class="num">Số tiền</th><th>Trạng thái</th></tr></thead>
+          <tbody>
+            <tr><td><div class="person"><span class="avatar">TL</span><div>Trần Lan<div class="muted">Kho Bắc Ninh</div></div></div></td><td class="muted">09:12, 26/10</td><td class="num">1.500.000đ</td><td><span class="badge badge-green"><span class="dot"></span>Đã chi</span></td></tr>
+            <tr><td><div class="person"><span class="avatar">PM</span><div>Phạm Minh<div class="muted">Nhà máy Hải Dương</div></div></div></td><td class="muted">08:47, 26/10</td><td class="num">800.000đ</td><td><span class="badge badge-yellow"><span class="dot"></span>Chờ duyệt</span></td></tr>
+            <tr><td><div class="person"><span class="avatar">LH</span><div>Lê Hùng<div class="muted">Giao nhận HN</div></div></div></td><td class="muted">17:30, 25/10</td><td class="num">2.000.000đ</td><td><span class="badge badge-red"><span class="dot"></span>Từ chối</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <form class="card" onsubmit="event.preventDefault(); document.querySelector('.toast').hidden = false;">
+        <h2 class="card-title">Hạn mức ứng lương</h2>
+        <div class="field">
+          <label class="label" for="pct">Tỷ lệ tối đa <span class="req">*</span></label>
+          <div class="input"><input id="pct" value="50" inputmode="numeric"><span class="muted">%</span></div>
+          <p class="helper">Phần trăm lương đã làm được phép ứng.</p>
+        </div>
+        <div class="field">
+          <label class="label" for="cap">Hạn mức mỗi lần</label>
+          <div class="input is-error"><span class="addon">VND</span><input id="cap" value="50.000.000"></div>
+          <p class="helper is-error"><svg class="icon" style="width:16px;height:16px"><use href="#i-information-circle"/></svg>Tối đa 10.000.000đ mỗi lần.</p>
+        </div>
+        <label class="check"><input type="checkbox" checked> Tự động duyệt dưới 1.000.000đ</label>
+        <label class="check" style="justify-content:space-between">Thông báo qua email <input type="checkbox" class="toggle" checked></label>
+        <div class="row" style="justify-content:flex-end">
+          <button type="button" class="btn btn-clear">Huỷ</button>
+          <button type="submit" class="btn btn-brand">Lưu thay đổi</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card" aria-label="Button showcase">
+      <h2 class="card-title">Buttons</h2>
+      <div class="row"><button class="btn btn-brand btn-sm">Brand sm</button><button class="btn btn-brand">Brand md</button><button class="btn btn-brand btn-lg">Brand lg</button><button class="btn btn-brand btn-xl">Brand xl</button><button class="btn btn-brand" disabled>Disabled</button></div>
+      <div class="row"><button class="btn btn-secondary">Secondary</button><button class="btn btn-clear">Clear</button><button class="btn btn-success">Success</button><button class="btn btn-alert">Alert</button><a class="link" href="#">Text link →</a></div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" role="status" hidden>
+  <span class="ok"><svg class="icon"><use href="#i-tick-02"/></svg></span>
+  <div style="flex:1"><p class="label">Đã lưu thay đổi</p><p class="helper">Hạn mức mới áp dụng từ kỳ lương tiếp theo.</p></div>
+  <button class="btn btn-clear btn-sm btn-icon" aria-label="Đóng" onclick="this.closest('.toast').hidden = true"><svg class="icon"><use href="#i-cancel-01"/></svg></button>
+</div>
+
+<script>
+  // Theme switch: cycles OS → dark → light via data-theme on <html>.
+  document.getElementById('theme').addEventListener('click', () => {
+    const r = document.documentElement;
+    const dark = r.dataset.theme === 'dark' || (!r.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+    r.dataset.theme = dark ? 'light' : 'dark';
+  });
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    t.parentElement.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-selected', x === t));
+  }));
+</script>
+</body>
+</html>
