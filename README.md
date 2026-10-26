@@ -29,14 +29,14 @@ Skill `ekko-design-system` gồm:
 Trong Claude Code (terminal hoặc app desktop, tab Code):
 
 ```text
-/plugin marketplace add <github-org>/ekko-design-skills
+/plugin marketplace add cuongbd-glitch/ekko-design-skills
 /plugin install ekko-design@ekko-design-skills
 ```
 
 Hoặc từ terminal:
 
 ```bash
-claude plugin marketplace add <github-org>/ekko-design-skills
+claude plugin marketplace add cuongbd-glitch/ekko-design-skills
 ```
 
 ```bash
